@@ -1,0 +1,37 @@
+# ─── Secrets (NEVER commit these) ─────────────────────────────────────────────
+# .env.local holds your real API keys, database URL, JWT secret, etc.
+# If this file is pushed to GitHub, those secrets are public forever.
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ─── Node.js ───────────────────────────────────────────────────────────────────
+# The node_modules folder can be hundreds of MB. Anyone cloning the repo
+# just runs `npm install` to recreate it from package.json.
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ─── Next.js build output ──────────────────────────────────────────────────────
+# .next/ is generated every time you run `npm run build` or `npm run dev`.
+# It does not need to be tracked in git.
+.next/
+out/
+build/
+
+# ─── OS & editor files ─────────────────────────────────────────────────────────
+.DS_Store          # macOS folder metadata
+Thumbs.db          # Windows thumbnail cache
+*.swp              # Vim swap files
+.vscode/           # VS Code workspace settings (optional to ignore)
+
+# ─── TypeScript ────────────────────────────────────────────────────────────────
+*.tsbuildinfo
+next-env.d.ts
+
+# ─── Logs ──────────────────────────────────────────────────────────────────────
+logs/
+*.log

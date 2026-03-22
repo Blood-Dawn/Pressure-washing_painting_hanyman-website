@@ -1,0 +1,22 @@
+/* globals.css
+   Applied to every page via app/layout.tsx.
+   Tailwind's three layers must be imported in this exact order.
+   @tailwind base     - resets browser defaults (normalize.css equivalent)
+   @tailwind components - component classes (not used heavily here)
+   @tailwind utilities  - all the utility classes like bg-white, text-sm, etc.
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-brand-cream text-gray-800 font-sans;
+  }
+}
