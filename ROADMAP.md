@@ -1,4 +1,4 @@
-# Project Roadmap: Handyman & Landscaping Website
+# Project Roadmap: Marc's Pro Services - Pressure Washing, Painting & Handyman Website
 
 ## Full Technical Architecture, File Map, and Build Plan
 
@@ -276,7 +276,7 @@ customer_email     TEXT        -- Used for all automated emails.
 customer_phone     TEXT        -- Admin contacts customer via this.
 customer_address   TEXT        -- Where the job is performed.
 customer_zip       TEXT        -- Validated against the service area zip code list.
-service_type       ENUM        -- One of: handyman, landscaping, power-washing, painting.
+service_type       ENUM        -- One of: pressure-washing, pressure-washing-painting, roof-washing, handyman.
 preferred_date     DATE        -- The date the customer wants.
 preferred_time     TEXT        -- The time slot they selected.
 description        TEXT        -- Optional notes from the customer.

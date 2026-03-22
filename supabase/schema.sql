@@ -27,10 +27,10 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- This prevents typos like 'compelted' instead of 'completed' causing bugs.
 
 CREATE TYPE service_type AS ENUM (
-  'handyman',
-  'landscaping',
-  'power-washing',
-  'painting'
+  'pressure-washing',
+  'pressure-washing-painting',
+  'roof-washing',
+  'handyman'
 );
 
 CREATE TYPE booking_status AS ENUM (
@@ -211,8 +211,8 @@ CREATE TRIGGER set_bookings_updated_at
 
 INSERT INTO services (slug, name, description, price_min, price_max, estimated_duration, display_order)
 VALUES
-  ('handyman',      'Handyman',      'General repairs, carpentry, installations, and home maintenance.',       50,  200,  '1 to 3 hours',   1),
-  ('landscaping',   'Landscaping',   'Lawn care, garden design, tree service, and hardscaping.',              100, 500,  '2 to 6 hours',   2),
-  ('power-washing', 'Power Washing', 'Driveways, fences, decks, and home exteriors.',                        150, 400,  '2 to 4 hours',   3),
-  ('painting',      'Painting',      'Interior and exterior painting with professional-grade materials.',     200, 1000, '4 to 8 hours',   4)
+  ('pressure-washing',          'Pressure Washing',              'Driveways, patios, fences, and home exteriors. Standard $150, extended $200.',  150, 250,  '1 to 3 hours',   1),
+  ('pressure-washing-painting', 'Pressure Wash + Exterior Paint','Full exterior prep and professional paint. Free on-site quote required.',       500, 2500, '1 to 3 days',    2),
+  ('roof-washing',              'Roof Washing',                  'Soft-wash treatment to remove algae, moss, and black streaks from any roof.',   NULL, NULL, 'Varies by roof', 3),
+  ('handyman',                  'Handyman',                      'General repairs, carpentry, installations, and home maintenance.',               50,  300,  '1 to 4 hours',   4)
 ON CONFLICT (slug) DO NOTHING;

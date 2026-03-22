@@ -1,6 +1,16 @@
-# Handyman & Landscaping Website
+# Marc's Pro Services - Pressure Washing, Painting & Handyman Website
 
-A full-stack Next.js web application for a handyman and landscaping business. Customers can book appointments online, track their appointment status in real time, and receive automated emails at every step of the process. The business owner gets a password-protected admin dashboard to manage bookings and update job statuses.
+A full-stack Next.js web application for a pressure washing, exterior painting, roof washing, and handyman business. Customers can book appointments or request a free quote online, track their appointment status in real time, and receive automated emails at every step. The business owner gets a password-protected admin dashboard to manage bookings and update job statuses.
+
+---
+
+## What This Site Does
+
+- **Instant booking** - customers book and pay directly for standard-priced jobs (pressure washing a standard or extended driveway)
+- **Free quote requests** - customers request an on-site visit for larger or custom jobs (roof washing, exterior painting, handyman work)
+- **Real-time tracking** - customers get a live status page with a map when the technician is on the way
+- **Admin dashboard** - Marc views, confirms, declines, and updates every booking from one screen
+- **Automated emails** - confirmation, reminder, status change, and completion emails sent via SendGrid
 
 ---
 
@@ -8,7 +18,7 @@ A full-stack Next.js web application for a handyman and landscaping business. Cu
 
 | Layer | Technology | Why |
 |---|---|---|
-| Framework | Next.js 14 (App Router) | Server rendering, routing, and API routes in one project |
+| Framework | Next.js (App Router) | Server rendering, routing, and API routes in one project |
 | Language | TypeScript | Type safety catches errors before runtime |
 | Database | Supabase (PostgreSQL) | Free tier, managed, full SQL support |
 | Auth | NextAuth.js | Secure session management without building it yourself |
@@ -16,6 +26,18 @@ A full-stack Next.js web application for a handyman and landscaping business. Cu
 | Styling | Tailwind CSS | Utility-first, no separate CSS files needed |
 | Validation | Zod | Schema validation shared between server and client |
 | Hosting | Vercel | Free tier, deploys automatically from GitHub |
+
+---
+
+## Services
+
+| Service | Type | Notes |
+|---|---|---|
+| Pressure Washing - Standard Driveway | Instant Book | $150 flat |
+| Pressure Washing - Extended Driveway | Instant Book | $200 flat (+$50 for walkways) |
+| Pressure Washing + Exterior Painting | Free Quote | On-site assessment required |
+| Roof Washing | Free Quote | On-site assessment required |
+| Handyman | Free Quote | On-site assessment required |
 
 ---
 
@@ -28,7 +50,9 @@ A full-stack Next.js web application for a handyman and landscaping business. Cu
 │   ├── globals.css                       Tailwind imports and global styles
 │   ├── page.tsx                          Landing page (/)
 │   ├── booking/
-│   │   └── page.tsx                      Booking form (/booking)
+│   │   └── page.tsx                      Booking form with optional mock payment (/booking)
+│   ├── quote/
+│   │   └── page.tsx                      Free quote request form (/quote)
 │   ├── track/[id]/
 │   │   └── page.tsx                      Customer tracking page (/track/[id])
 │   ├── admin/
@@ -41,13 +65,18 @@ A full-stack Next.js web application for a handyman and landscaping business. Cu
 │       ├── bookings/
 │       │   ├── route.ts                  GET (list) / POST (create) bookings
 │       │   └── [id]/
-│       │       └── route.ts              PATCH (update) / DELETE a booking
+│       │       ├── route.ts              GET (tracking) / PATCH (update) / DELETE a booking
+│       │       └── location/
+│       │           └── route.ts          PATCH technician GPS location
 │       └── stats/
 │           └── route.ts                  GET admin stats
 ├── components/
-│   ├── BookingForm.tsx                   Customer booking form (client component)
+│   ├── SiteNav.tsx                       Top navigation bar (sticky, social icons, CTAs)
+│   ├── BookingForm.tsx                   Customer booking form with two-step payment (client)
+│   ├── QuoteForm.tsx                     Free quote request form (client)
 │   ├── AdminBookingCard.tsx              Single booking card with action buttons
-│   ├── TrackingWidget.tsx                Live-updating tracking display
+│   ├── TrackingWidget.tsx                Live-updating tracking display with map
+│   ├── LiveMap.tsx                       Leaflet map loaded via CDN (browser-only)
 │   └── ServiceCard.tsx                   Service display card for landing page
 ├── lib/
 │   ├── auth.ts                           NextAuth config + password hashing
@@ -58,11 +87,11 @@ A full-stack Next.js web application for a handyman and landscaping business. Cu
 ├── types/
 │   └── index.ts                          All TypeScript types for the project
 ├── supabase/
-│   └── schema.sql                        Database table definitions (run once)
-├── .env.example                          Template for environment variables
+│   └── schema.sql                        Database table definitions (run once in Supabase SQL editor)
+├── .env.example                          Template for environment variables (safe to commit)
 ├── .gitignore                            Files excluded from git
 ├── next.config.js                        Next.js configuration
-├── tailwind.config.js                    Tailwind theme and content paths
+├── tailwind.config.js                    Tailwind theme and brand color tokens
 ├── tsconfig.json                         TypeScript configuration
 ├── ROADMAP.md                            Full architecture and code documentation
 └── README.md                             This file
@@ -86,13 +115,10 @@ Before you start, make sure the following are installed on your machine:
 
 ### Step 1: Clone the repository
 
-If you have already pushed this to GitHub:
 ```bash
 git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
 cd YOUR_REPO_NAME
 ```
-
-If you are starting fresh from this folder, skip to Step 2.
 
 ### Step 2: Install dependencies
 
@@ -176,61 +202,9 @@ npm run dev
 Open http://localhost:3000 in your browser.
 
 - Landing page: http://localhost:3000
-- Booking form: http://localhost:3000/booking
-- Admin login: http://localhost:3000/admin/login (redirects from /admin/dashboard)
-
----
-
-## Uploading to GitHub
-
-Run these commands from inside the project folder. The path to your project is:
-
-```
-/sessions/brave-great-euler/mnt/Landscaping_hanyman-website
-```
-
-### Step 1: Initialize git (only needed once)
-
-```bash
-cd /sessions/brave-great-euler/mnt/Landscaping_hanyman-website
-git init
-```
-
-### Step 2: Create the repository on GitHub
-
-Go to https://github.com/new and create a new repository. Name it something like `handyman-website`. Set it to **Private** (your `.env.local` stays local, but keep the code private until you are ready). Do NOT initialize it with a README or .gitignore since we already have both.
-
-Copy the repository URL. It will look like:
-`https://github.com/YOUR_USERNAME/handyman-website.git`
-
-### Step 3: Add the remote
-
-```bash
-git remote add origin https://github.com/YOUR_USERNAME/handyman-website.git
-```
-
-### Step 4: Stage all files and make the first commit
-
-```bash
-git add .
-git commit -m "Initial commit: full project scaffold with booking system, admin dashboard, and tracking"
-```
-
-The `.gitignore` file will automatically exclude `node_modules/`, `.next/`, and `.env.local`. None of those will be committed.
-
-### Step 5: Push to GitHub
-
-```bash
-git branch -M main
-git push -u origin main
-```
-
-After this, every future push is just:
-```bash
-git add .
-git commit -m "Your commit message"
-git push
-```
+- Book an appointment: http://localhost:3000/booking
+- Free quote request: http://localhost:3000/quote
+- Admin login: http://localhost:3000/admin/login
 
 ---
 
@@ -253,6 +227,18 @@ Click **Deploy**. Vercel builds and deploys the project. Every time you push to 
 
 ---
 
+## Supabase: Add New Service Types
+
+After updating the service types in code, you must also update the Postgres enum in Supabase. Run this in the SQL Editor:
+
+```sql
+ALTER TYPE service_type ADD VALUE IF NOT EXISTS 'pressure-washing';
+ALTER TYPE service_type ADD VALUE IF NOT EXISTS 'pressure-washing-painting';
+ALTER TYPE service_type ADD VALUE IF NOT EXISTS 'roof-washing';
+```
+
+---
+
 ## Key Commands
 
 ```bash
@@ -261,6 +247,18 @@ npm run build        Build production bundle (TypeScript errors will surface her
 npm run start        Start the production server locally (after build)
 npm run lint         Run ESLint to check for code issues
 ```
+
+---
+
+## Pending Before Launch
+
+- [ ] Add Marc's real TikTok, Facebook, and Instagram URLs to `components/SiteNav.tsx` (search for `SOCIAL_LINKS`)
+- [ ] Finalize business name (currently "Marc's Pro Services" placeholder)
+- [ ] Add logo: save file to `/public/logo.png`, then update the logo block in `SiteNav.tsx` (instructions are in a comment in that file)
+- [ ] Set roof washing price once Marc decides it, then add it to `BookingForm.tsx`
+- [ ] Run the Supabase SQL migration above to add new service_type enum values
+- [ ] Replace mock payment with a real payment provider (Stripe recommended) before going live
+- [ ] Set the GitHub repo to Private until ready to launch
 
 ---
 

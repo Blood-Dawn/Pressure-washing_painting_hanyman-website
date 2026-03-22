@@ -80,7 +80,7 @@ function baseEmailWrapper(body: string): string {
     </head>
     <body>
       <div class="card">
-        <div class="header"><h1>Your Handyman &amp; Landscaping Service</h1></div>
+        <div class="header"><h1>Marc&apos;s Pro Services</h1></div>
         <div class="body">${body}</div>
         <div class="footer">This email was sent automatically. Please do not reply to this email.</div>
       </div>

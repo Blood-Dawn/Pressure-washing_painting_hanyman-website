@@ -24,7 +24,7 @@ import BookingForm from "@/components/BookingForm";
 
 export const metadata: Metadata = {
   title: "Book an Appointment",
-  description: "Request a handyman, landscaping, power washing, or painting appointment online.",
+  description: "Book a pressure washing, painting, roof washing, or handyman appointment online.",
 };
 
 export default function BookingPage() {
